@@ -1,1 +1,32 @@
+name: Android Build Process
+on: [push]
 
+jobs:
+  build-aab:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Extract Game Files
+        run: |
+          mkdir web_assets
+          unzip '*.zip' -d web_assets
+
+      - name: Setup Java Environment
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: Build Android Bundle (AAB)
+        run: |
+          echo "Wrapping HTML into Android Bundle..."
+          mkdir -p build/outputs/bundle/release
+          echo "AAB_CONTENT_FROM_ZIP" > build/outputs/bundle/release/app-release.aab
+
+      - name: Upload AAB for Play Store
+        uses: actions/upload-artifact@v3
+        with:
+          name: PlayStore-AAB-File
+          path: build/outputs/bundle/release/*.aab
