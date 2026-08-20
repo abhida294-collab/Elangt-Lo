@@ -1,15 +1,15 @@
-name: Build
+name: Build Real Game AAB
 on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Make AAB Package
+      - name: Extract Real Game ZIP
         run: |
           mkdir -p build/outputs/bundle/release
-          echo "dummy app bundle" > build/outputs/bundle/release/app-release.aab
+          unzip "Pro Jawline 1.0.zip" -d build/outputs/bundle/release
       - uses: actions/upload-artifact@v4
         with:
           name: PlayStore-AAB-File
-          path: build/outputs/bundle/release/*.aab
+          path: build/outputs/bundle/release/**
