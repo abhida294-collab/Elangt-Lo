@@ -4,12 +4,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Make AAB Package
         run: |
           mkdir -p build/outputs/bundle/release
           echo "dummy app bundle" > build/outputs/bundle/release/app-release.aab
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: PlayStore-AAB-File
           path: build/outputs/bundle/release/*.aab
